@@ -1,12 +1,11 @@
 // blogs API
 
-
 import { rootApi } from "../api/rootApi";
 
 export const blogsApi = rootApi.injectEndpoints({
     endpoints: (builder) => ({
         fetchBlogs: builder.query({
-            query: () => '/blogs/',
+            query: () => '/api/blogs/blogLists',
         }),
 
         fetchSingleBlog: builder.query({
@@ -16,8 +15,11 @@ export const blogsApi = rootApi.injectEndpoints({
         // create Blogs
         addBlog: builder.mutation({
             query: (data) => ({
-                url: '/blogs/createBlog',
+                url: '/api/blogs/addBlog',
                 method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 body: data
             }),
 
@@ -117,3 +119,4 @@ export const blogsApi = rootApi.injectEndpoints({
         })
     })
 })
+export const { useAddBlogMutation, useFetchBlogsQuery } = blogsApi
