@@ -47,11 +47,7 @@ import styles from '../styles/Home.module.css'
 export default function Home({ posts }) {
 
 
-  // const { rawBlogs } = useSelector((state) => state?.blogs);
-
-  // console.log(rawBlogs);
-
-
+  const { rawBlogs } = useSelector((state) => state?.blogs);
 
 
   return (
@@ -61,7 +57,7 @@ export default function Home({ posts }) {
       <hr />
 
       <div className='grid grid-col-1 md:grid-cols-2 lg:grid-cols-3  items-center mx-auto py-3 content-center w-full'>
-        {posts?.map((post) => {
+        {rawBlogs?.map((post) => {
           return <BlogCard key={post.id} post={post} />
         })}
       </div>
