@@ -1,13 +1,11 @@
 // all the Blogs API Route for Backend
 // http://localhost:3000/api/blogs/addBlog
 
-import Blog from "../../../models/blogModel";
+import Blog from "../../../models/blogModel.js";
 
 import connectMongo from "../../../utils/connectMongo";
 
 export default async function addBlog(req, res) {
-
-    const { title, category, description, isPublished } = req.body;
 
     await connectMongo();
 
@@ -15,14 +13,16 @@ export default async function addBlog(req, res) {
 
     try {
 
-        const newBlog = await Blog.create({
-            title,
-            category,
-            description,
-            isPublished
-        })
+        const { title, category, description, isPublished } = req?.body;
 
-        res.status(201).send(newBlog);
+        if (title !== '' || category !== '' || description != '') {
+            const newBlog = await Blog.create({
+                title,
+                category,
+                description
+            })
+            res.status(201).send(newBlog);
+        }
 
     } catch (error) {
         res.status(400).send({ message: 'Error In Adding Blog', error: error })
@@ -30,3 +30,25 @@ export default async function addBlog(req, res) {
 
 
 }
+
+
+
+// const createBlog = async (req, res) => {
+
+//     const { blogAuthorId, blogAuthor, blogTitle, blogCategory, blogDescription } = req.body
+
+//     try {
+//         const createdBlog = await Blog.create({
+//             blogAuthorId,
+//             blogAuthor,
+//             blogTitle,
+//             blogCategory,
+//             blogDescription
+//         })
+
+//         res.status(201).json(createdBlog);
+//     } catch (error) {
+//         res.status(404).json({ message: error })
+//     }
+
+// }

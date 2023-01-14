@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import BlogCard from '../components/BlogCard'
 import Navbar from '../components/Navbar'
+import { useFetchBlogsQuery } from '../features/blogs/blogsApi'
 import styles from '../styles/Home.module.css'
 
 
@@ -44,10 +46,30 @@ import styles from '../styles/Home.module.css'
 
 
 
-export default function Home({ posts }) {
+export default function Home() {
 
 
-  const { rawBlogs } = useSelector((state) => state?.blogs);
+  // const { rawBlogs } = useSelector((state) => state?.blogs);
+
+  const { data: blogs } = useFetchBlogsQuery() || {};
+
+  // const [blogs, setBlogs] = useState([]);
+
+  // useEffect(() => {
+
+  //   const getAllBlogs = async () => {
+  //     const res = await fetch('http://localhost:3000/api/blogs/fetchBlogs')
+  //     const blogs = await res.json();
+  //     setBlogs(blogs);
+  //   }
+
+  //   getAllBlogs();
+
+  // }, [])
+
+  // if (blogs?.length > 0) {
+  //   console.log(blogs);
+  // }
 
 
   return (
@@ -57,7 +79,7 @@ export default function Home({ posts }) {
       <hr />
 
       <div className='grid grid-col-1 md:grid-cols-2 lg:grid-cols-3  items-center mx-auto py-3 content-center w-full'>
-        {rawBlogs?.map((post) => {
+        {blogs?.map((post) => {
           return <BlogCard key={post.id} post={post} />
         })}
       </div>
